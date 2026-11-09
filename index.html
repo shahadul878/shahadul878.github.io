@@ -27,7 +27,6 @@
   --band-bg: #0F1C2E;
   --band-fg: #EEF3F8;
   --band-muted: #9CAABD;
-  --city-zero: #E2E8F0; --city-low: #9CC7E4; --city-high: #0D4A75; --city-base: #E9EEF4;
   /* the rack is a physical object: same metal in both themes */
   --rack-metal: #1B2330; --rack-metal-2: #10161F; --rack-edge: #2C3747; --rack-side: #0A0F16;
   --rack-face: #232D3B; --rack-face-2: #19212C; --rack-hole: #06090E; --rack-text: #D3DDE9; --rack-dim: #7A889B;
@@ -51,7 +50,6 @@
     --bg: #09101B; --surface: #0F1928; --ink: #E6ECF4; --muted: #95A3B7; --line: #1F2D42;
     --accent: #5BB0E5; --accent-soft: #11283D; --ok: #43CF8C; --ok-soft: #0E2C1E;
     --idle: #F0B54E; --idle-soft: #2E2310; --band-bg: #E6ECF4; --band-fg: #09101B; --band-muted: #4B5B71;
-    --city-zero: #172437; --city-low: #1D4A6C; --city-high: #8DD0F7; --city-base: #121E2F;
     color-scheme: dark;
   }
 }
@@ -59,8 +57,7 @@
   --bg: #09101B; --surface: #0F1928; --ink: #E6ECF4; --muted: #95A3B7; --line: #1F2D42;
   --accent: #5BB0E5; --accent-soft: #11283D; --ok: #43CF8C; --ok-soft: #0E2C1E;
   --idle: #F0B54E; --idle-soft: #2E2310; --band-bg: #E6ECF4; --band-fg: #09101B; --band-muted: #4B5B71;
-  --city-zero: #172437; --city-low: #1D4A6C; --city-high: #8DD0F7; --city-base: #121E2F;
-    color-scheme: dark;
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -201,25 +198,6 @@ p { margin: 0; }
 .comp .tools { font: 0.8rem var(--font-mono); color: var(--muted); line-height: 1.7; }
 .chip { display: inline-flex; align-items: center; gap: 8px; font: 500 0.8rem var(--font-mono); color: var(--ok); white-space: nowrap; }
 .chip .dot::after { animation: none; }
-
-/* activity chart */
-.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 22px 18px; }
-.chart-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap; margin-bottom: 18px; }
-.chart-total { font: 700 2rem var(--font-display); letter-spacing: -0.03em; }
-.chart-total span { font: 500 0.9rem var(--font-body); color: var(--muted); letter-spacing: 0; margin-left: 6px; }
-.readout { font: 0.85rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; min-height: 1.4em; }
-.readout b { color: var(--ink); font-weight: 600; }
-.plot { position: relative; height: 180px; margin-left: 28px; }
-.gridline { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--line); }
-.gridline span { position: absolute; right: calc(100% + 8px); top: -0.6em; font: 0.7rem var(--font-mono); color: var(--muted); }
-.bars { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 3px; }
-.bar { flex: 1 1 0; min-width: 0; border-radius: 2px 2px 0 0; background: var(--accent); opacity: 0.85; transition: opacity 120ms, background 120ms; cursor: crosshair; }
-.bar.zero { background: var(--line); opacity: 1; }
-.bar.peak { background: var(--ink); opacity: 1; }
-.bar:hover, .bar.active { opacity: 1; background: var(--ok); }
-.axis { position: relative; height: 22px; margin-left: 28px; margin-top: 8px; font: 0.72rem var(--font-mono); color: var(--muted); }
-.axis span { position: absolute; top: 0; white-space: nowrap; }
-.chart-foot { margin-top: 10px; font-size: 0.82rem; color: var(--muted); }
 
 /* releases = career */
 .releases { list-style: none; margin: 0; padding: 0; position: relative; }
@@ -465,17 +443,6 @@ body { overflow-x: clip; }
   @keyframes swap { from { transform: translateY(8px); opacity: 0.35; } to { transform: none; opacity: 1; } }
 }
 
-/* ---------- 3D commit city (activity) ---------- */
-.city-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.city-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px 24px; flex-wrap: wrap; padding: 22px 22px 0; }
-.city { position: relative; height: clamp(320px, 44vw, 540px); touch-action: pan-y; cursor: grab; }
-.city:active { cursor: grabbing; }
-.city canvas { display: block; width: 100%; height: 100%; }
-.city-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px 20px; flex-wrap: wrap; padding: 0 22px 18px; font: 0.76rem var(--font-mono); color: var(--muted); }
-.city-legend { display: inline-flex; align-items: center; gap: 8px; }
-.city-legend i { width: 90px; height: 8px; border-radius: 2px; background: linear-gradient(90deg, var(--city-low), var(--city-high)); }
-.city-bar .chart-foot { margin: 0; flex-basis: 100%; font-family: var(--font-body); }
-
 @media (max-width: 900px) {
   .rack-layout { grid-template-columns: minmax(0, 1fr); }
   .rack-panel { min-height: 0; }
@@ -490,6 +457,56 @@ body { overflow-x: clip; }
   .rack-head { flex-wrap: wrap; row-gap: 4px; }
   .unit { height: auto; min-height: 50px; padding-block: 7px; }
   .unit .label b { white-space: normal; line-height: 1.2; }
+}
+
+/* ---------- live GitHub feed (activity) ---------- */
+.feed-status { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; margin-bottom: 16px; font: 0.82rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.feed-status b { color: var(--ink); font-weight: 600; }
+.feed-state { display: inline-flex; align-items: center; gap: 9px; padding: 5px 13px 5px 11px; border-radius: 999px; background: var(--idle-soft); color: var(--idle); }
+.feed-state.is-live { background: var(--ok-soft); color: var(--ok); }
+.feed-state:not(.is-live) .dot::after { animation: none; }
+.feed-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.log-card, .repo-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
+.card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.card-head h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.015em; }
+.card-head span, .card-head a { font: 0.75rem var(--font-mono); color: var(--muted); }
+.card-head a { text-decoration: none; transition: color 150ms; }
+.card-head a:hover { color: var(--accent); }
+.log { list-style: none; margin: 0; padding: 4px 0 12px; }
+.log .day { display: flex; align-items: center; gap: 10px; padding: 14px 20px 4px; font: 600 0.7rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.log .day::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.entry { display: grid; grid-template-columns: 44px 70px minmax(0, 1fr); gap: 12px; align-items: start; padding: 8px 20px; transition: background 120ms; }
+.entry:hover { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+.entry time { font: 0.78rem var(--font-mono); color: var(--muted); padding-top: 2px; font-variant-numeric: tabular-nums; }
+.tag {
+  justify-self: start; margin-top: 1px; font: 600 0.66rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px; background: var(--bg); color: var(--muted); border: 1px solid var(--line);
+}
+.tag.feat { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.tag.fix { background: var(--idle-soft); color: var(--idle); border-color: transparent; }
+.tag.release { background: var(--ok); color: var(--surface); border-color: transparent; }
+.entry-main { min-width: 0; display: grid; gap: 2px; }
+.entry .msg { color: var(--ink); text-decoration: none; line-height: 1.4; overflow-wrap: anywhere; }
+.entry .msg:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.entry.release .msg { font-weight: 700; }
+.entry .where { font-size: 0.74rem; color: var(--muted); overflow-wrap: anywhere; }
+.repos { list-style: none; margin: 0; padding: 4px 0; }
+.repo { display: grid; gap: 5px; padding: 14px 20px; text-decoration: none; border-top: 1px solid var(--line); transition: background 120ms; }
+.repos li:first-child .repo { border-top: 0; }
+.repo:hover { background: color-mix(in srgb, var(--accent-soft) 45%, transparent); }
+.repo-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.repo-top b { font: 600 0.9rem var(--font-mono); overflow-wrap: anywhere; min-width: 0; }
+.repo:hover .repo-top b { color: var(--accent); }
+.ago { font: 0.74rem var(--font-mono); color: var(--muted); white-space: nowrap; }
+.repo .desc { font-size: 0.88rem; line-height: 1.45; color: var(--muted); }
+.lang { display: inline-flex; align-items: center; gap: 6px; font: 0.74rem var(--font-mono); color: var(--muted); }
+.lang i { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--muted)); }
+@media (max-width: 900px) { .feed-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 600px) {
+  .entry { grid-template-columns: 40px minmax(0, 1fr); gap: 4px 10px; padding-inline: 16px; }
+  .entry time { grid-row: 1 / span 2; }
+  .entry .tag, .entry-main { grid-column: 2; }
+  .card-head, .repo, .log .day { padding-inline: 16px; }
 }
 </style>
 
@@ -596,31 +613,26 @@ body { overflow-x: clip; }
     <div class="section-head">
       <div>
         <p class="kicker">Activity</p>
-        <h2 id="activity-h">A year of commits, built as a city</h2>
+        <h2 id="activity-h">Live from GitHub</h2>
       </div>
-      <p>Every day of the last year is a building, and taller means more commits. Drag to spin it, hover to read a day.</p>
+      <p>Latest commits, releases and repos, pulled from github.com/shahadul878 each time the page loads. Times are Dhaka time.</p>
     </div>
-    <figure class="city-card" id="city-card" style="margin:0">
-      <div class="city-top">
-        <p class="chart-total">725<span>contributions · 366 days · one building per day</span></p>
-        <p class="readout" id="city-readout" aria-live="polite"></p>
+    <div class="feed-status">
+      <span class="feed-state" id="feed-state"><span class="dot" aria-hidden="true"></span><span id="feed-state-text">Saved snapshot · 9 Nov 2026</span></span>
+      <span>Last push <b id="feed-last">recently</b></span>
+      <span><b id="feed-repos">96</b> public repos</span>
+      <span><b>725</b> contributions in 12 months</span>
+    </div>
+    <div class="feed-grid">
+      <div class="log-card">
+        <div class="card-head"><h3>Deploy log</h3><span>commits and releases</span></div>
+        <ol class="log" id="feed-log" aria-label="Recent commits and releases"></ol>
       </div>
-      <div class="city" id="city" role="img" aria-label="A 3D city of daily GitHub contributions from 9 November 2025 to 9 November 2026, one building per day. Busiest day: Thursday 18 December 2025 with 31 contributions."></div>
-      <div class="city-bar">
-        <span>Drag to spin · hover or tap a building</span>
-        <span class="city-legend">0<i aria-hidden="true"></i>31 a day</span>
-        <figcaption class="chart-foot">Source: github.com/shahadul878, contribution calendar, read 9 Nov 2026. Rows run Sunday to Saturday; the newest week is at the far end.</figcaption>
-      </div>
-    </figure>
-    <figure class="chart-card" id="chart-fallback" style="margin:0" hidden>
-      <div class="chart-top">
-        <p class="chart-total">725<span>contributions · 53 weeks</span></p>
-        <p class="readout" id="readout" aria-live="polite"></p>
-      </div>
-      <div class="plot" id="plot" role="img" aria-label="Weekly GitHub contributions from November 2025 to November 2026. Busiest week: 62 contributions, week of 14 December 2025."></div>
-      <div class="axis" id="axis" aria-hidden="true"></div>
-      <figcaption class="chart-foot">Source: github.com/shahadul878, contribution calendar, read 9 Nov 2026. The current week is still in progress.</figcaption>
-    </figure>
+      <aside class="repo-card" aria-label="Recently pushed repositories">
+        <div class="card-head"><h3>Recently shipped</h3><a href="https://github.com/shahadul878?tab=repositories&amp;sort=updated" target="_blank" rel="noopener">All repos ↗</a></div>
+        <ul class="repos" id="feed-repo-list"></ul>
+      </aside>
+    </div>
   </section>
 
   <section class="section wrap" id="releases" aria-labelledby="releases-h">
@@ -811,15 +823,12 @@ body { overflow-x: clip; }
   </form>
 </dialog>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (() => {
   const FIRST_PUSH = Date.UTC(2015, 7, 5, 5, 10, 42);
   const HOUR = 3600e3, DAY = 24 * HOUR;
   const SHIFT_START_UTC = 17, SHIFT_HOURS = 8, SHIFT_DAYS = [0, 1, 2, 3, 4];
   const EMAIL = 'shahadul.islam1@gmail.com';
-  const WEEKS = [["2025-11-09",13],["2025-11-16",4],["2025-11-23",1],["2025-11-30",2],["2025-12-07",0],["2025-12-14",62],["2025-12-21",2],["2025-12-28",3],["2026-01-04",14],["2026-01-11",1],["2026-01-18",21],["2026-01-25",5],["2026-02-01",0],["2026-02-08",1],["2026-02-15",0],["2026-02-22",17],["2026-03-01",13],["2026-03-08",26],["2026-03-15",20],["2026-03-22",11],["2026-03-29",6],["2026-04-05",8],["2026-04-12",25],["2026-04-19",4],["2026-04-26",45],["2026-05-03",14],["2026-05-10",7],["2026-05-17",15],["2026-05-24",7],["2026-05-31",1],["2026-06-07",9],["2026-06-14",1],["2026-06-21",18],["2026-06-28",14],["2026-07-05",25],["2026-07-12",9],["2026-07-19",46],["2026-07-26",44],["2026-08-02",2],["2026-08-09",2],["2026-08-16",3],["2026-08-23",32],["2026-08-30",56],["2026-09-06",21],["2026-09-13",3],["2026-09-20",2],["2026-09-27",2],["2026-10-04",18],["2026-10-11",10],["2026-10-18",14],["2026-10-25",8],["2026-11-01",38],["2026-11-08",0]];
-  const SCALE_MAX = 65, GRID = [0, 20, 40, 60];
   const $ = (id) => document.getElementById(id);
   const pad = (n) => String(n).padStart(2, '0');
 
@@ -871,52 +880,6 @@ body { overflow-x: clip; }
   }
   tick();
   setInterval(tick, 1000);
-
-  // ---- weekly activity chart ----
-  const dateFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
-  const monthFmt = new Intl.DateTimeFormat('en-GB', { month: 'short', timeZone: 'UTC' });
-  const plot = $('plot'), axis = $('axis'), readout = $('readout');
-  const peak = WEEKS.reduce((best, w, i) => (w[1] > WEEKS[best][1] ? i : best), 0);
-  const describe = (i) => {
-    const [d, n] = WEEKS[i];
-    const label = i === WEEKS.length - 1 ? 'This week so far' : `Week of ${dateFmt.format(new Date(d + 'T00:00:00Z'))}`;
-    return { label, n };
-  };
-  const showReadout = (i, prefix) => {
-    const { label, n } = describe(i);
-    readout.replaceChildren(document.createTextNode(`${prefix}${label} · `), Object.assign(document.createElement('b'), { textContent: String(n) }), document.createTextNode(n === 1 ? ' contribution' : ' contributions'));
-  };
-  GRID.forEach((v) => {
-    const g = document.createElement('div');
-    g.className = 'gridline'; g.style.bottom = `${(v / SCALE_MAX) * 100}%`;
-    g.innerHTML = `<span>${v}</span>`;
-    plot.appendChild(g);
-  });
-  const bars = document.createElement('div');
-  bars.className = 'bars';
-  WEEKS.forEach(([, n], i) => {
-    const b = document.createElement('div');
-    b.className = 'bar' + (n === 0 ? ' zero' : '') + (i === peak ? ' peak' : '');
-    b.style.height = n === 0 ? '2px' : `${(n / SCALE_MAX) * 100}%`;
-    b.style.animationDelay = `${i * 12}ms`;
-    b.addEventListener('pointerenter', () => { bars.querySelector('.active')?.classList.remove('active'); b.classList.add('active'); showReadout(i, ''); });
-    bars.appendChild(b);
-  });
-  bars.addEventListener('pointerleave', () => { bars.querySelector('.active')?.classList.remove('active'); showReadout(peak, 'Busiest: '); });
-  plot.appendChild(bars);
-  showReadout(peak, 'Busiest: ');
-  let lastMonth = -1;
-  WEEKS.forEach(([d], i) => {
-    const dt = new Date(d + 'T00:00:00Z'), mo = dt.getUTCMonth();
-    if (mo === lastMonth) return;
-    lastMonth = mo;
-    if (mo % 3 !== 1 && i !== 0) return;
-    const s = document.createElement('span');
-    const pct = (i / WEEKS.length) * 100;
-    s.textContent = monthFmt.format(dt) + (mo === 10 ? ` ’${String(dt.getUTCFullYear()).slice(2)}` : '');
-    if (pct > 90) { s.style.right = '0'; } else { s.style.left = `${pct}%`; }
-    axis.appendChild(s);
-  });
 
   // ---- copy email ----
   const copyBtn = $('copy-email');
@@ -1064,186 +1027,171 @@ body { overflow-x: clip; }
     stage.addEventListener('pointerleave', () => { rack.style.removeProperty('--ry'); rack.style.removeProperty('--rx'); });
   }
 
-  // ---- 3D commit city ----
-  const DAY_START = Date.parse('2025-11-09T00:00:00Z');
-  const DAYS = [0,4,7,0,0,1,1,0,0,0,0,3,0,1,0,0,1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,31,7,7,0,0,0,1,1,0,0,0,0,0,0,1,2,0,0,0,0,5,1,7,1,0,0,0,1,0,0,0,0,0,0,9,3,7,2,0,0,0,3,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,0,6,0,0,6,1,0,3,2,3,2,5,6,5,0,1,0,3,7,0,9,0,11,0,0,0,0,0,0,0,0,5,1,0,0,0,3,1,3,0,0,1,0,0,2,4,5,0,14,0,3,0,0,1,0,0,2,2,16,7,7,9,2,8,5,1,0,0,0,0,0,0,2,3,0,2,0,10,0,5,0,0,0,0,0,2,2,3,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,8,0,0,1,0,0,0,0,10,7,1,0,0,0,0,0,0,3,4,3,2,2,20,0,4,1,0,0,0,0,0,5,3,1,0,0,3,30,1,1,9,1,1,0,2,2,12,4,22,2,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,1,7,22,1,10,9,16,4,1,13,3,0,5,3,5,7,1,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,1,0,6,7,2,1,0,0,6,0,2,2,0,0,1,0,1,12,0,0,1,0,2,1,2,0,2,2,4,0,1,5,17,9,0,0];
-  const PEAK_DAY = DAYS.indexOf(Math.max(...DAYS));
-  const cityReadoutEl = $('city-readout');
-  const dayFmt = new Intl.DateTimeFormat('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
-  const showDay = (i, prefix = '') => {
-    const n = DAYS[i];
-    cityReadoutEl.replaceChildren(
-      document.createTextNode(`${prefix}${dayFmt.format(new Date(DAY_START + i * DAY))} · `),
-      el('b', null, String(n)),
-      document.createTextNode(n === 1 ? ' contribution' : ' contributions'));
+
+  // ---- live GitHub feed (activity) ----
+  // Renders a saved snapshot first, then swaps in live data from the GitHub API when the host allows it.
+  const GH_USER = 'shahadul878', GH_API = 'https://api.github.com';
+  const FEED_CACHE_KEY = 'gh-feed-v1', FEED_CACHE_MS = 10 * 60e3, FEED_TIMEOUT_MS = 8000;
+  const FEED_REPOS = 6, FEED_ITEMS = 14, FEED_CLOCK_MS = 30e3;
+  const SNAPSHOT = {"at":"2026-11-09T15:40:00Z","publicRepos":96,"repos":[{"name":"shahadul878.github.io","desc":"Personal site: a live status page for one developer","lang":"HTML","pushed":"2026-11-09T15:25:31Z","url":"https://github.com/shahadul878/shahadul878.github.io","home":"https://shahadul878.github.io"},{"name":"imei-phone-ledger","desc":"WordPress plugin: purchase and sale ledger for second-hand phone shops, tracked by IMEI.","lang":"PHP","pushed":"2026-11-07T16:49:23Z","url":"https://github.com/shahadul878/imei-phone-ledger","home":""},{"name":"local-addon-postgresql","desc":"Local (by Flywheel) add-on that installs and manages a PostgreSQL server per site","lang":"JavaScript","pushed":"2026-11-07T13:44:47Z","url":"https://github.com/shahadul878/local-addon-postgresql","home":"https://github.com/shahadul878/local-addon-postgresql/blob/master/docs/GUIDE.md"},{"name":"local-addon-laravel","desc":"Install, configure and manage Laravel apps inside Local (localwp.com) sites — one click, using the site's own PHP, MySQL and Mailpit.","lang":"JavaScript","pushed":"2026-11-07T13:37:12Z","url":"https://github.com/shahadul878/local-addon-laravel","home":"https://github.com/shahadul878/local-addon-laravel/blob/main/docs/USER_GUIDE.md"},{"name":"easy-php-settings","desc":"","lang":"PHP","pushed":"2026-11-06T15:32:54Z","url":"https://github.com/shahadul878/easy-php-settings","home":"https://wordpress.org/plugins/easy-php-settings/"},{"name":"easy-yt-downloader","desc":"Professional desktop download manager (Tauri + React) for permitted media","lang":"TypeScript","pushed":"2026-11-02T07:42:46Z","url":"https://github.com/shahadul878/easy-yt-downloader","home":"https://easy-yt-downloader.vercel.app"}],"items":[{"kind":"commit","date":"2026-11-09T15:25:23Z","repo":"shahadul878.github.io","sha":"0dd4841","msg":"feat: launch personal status-page site","url":"https://github.com/shahadul878/shahadul878.github.io/commit/0dd48411e5a1bf2322019af3f1541766d7833fa6"},{"kind":"release","date":"2026-11-07T16:50:17Z","repo":"imei-phone-ledger","sha":"v1.0.0","msg":"Released v1.0.0","url":"https://github.com/shahadul878/imei-phone-ledger/releases/tag/v1.0.0"},{"kind":"commit","date":"2026-11-07T16:24:26Z","repo":"imei-phone-ledger","sha":"926dcb3","msg":"docs: user guide, README and WordPress.org screenshots for 1.0.0","url":"https://github.com/shahadul878/imei-phone-ledger/commit/926dcb3a15a3c21241829a75c249d1d487dbcbd8"},{"kind":"commit","date":"2026-11-07T16:18:38Z","repo":"imei-phone-ledger","sha":"7a635f3","msg":"feat: IMEI Phone Ledger 1.0.0","url":"https://github.com/shahadul878/imei-phone-ledger/commit/7a635f3b894df9cc22a08bc4acabbca9d247acc1"},{"kind":"release","date":"2026-11-07T13:45:04Z","repo":"local-addon-postgresql","sha":"v1.0.0","msg":"Released v1.0.0","url":"https://github.com/shahadul878/local-addon-postgresql/releases/tag/v1.0.0"},{"kind":"release","date":"2026-11-07T13:37:32Z","repo":"local-addon-laravel","sha":"v1.0.0","msg":"Released v1.0.0","url":"https://github.com/shahadul878/local-addon-laravel/releases/tag/v1.0.0"},{"kind":"commit","date":"2026-11-07T13:22:04Z","repo":"local-addon-laravel","sha":"e6f6622","msg":"feat: new add-on icon and GitHub social-preview banner","url":"https://github.com/shahadul878/local-addon-laravel/commit/e6f6622535434b11296a8eb572ca98c117fa9f18"},{"kind":"commit","date":"2026-11-07T12:57:36Z","repo":"local-addon-laravel","sha":"862ad53","msg":"fix: use the injected platform when locating Local's PHP","url":"https://github.com/shahadul878/local-addon-laravel/commit/862ad53aec5fb3789093652972d25c79b05dcee8"},{"kind":"commit","date":"2026-11-07T12:55:58Z","repo":"local-addon-laravel","sha":"ce85638","msg":"feat: Laravel for Local add-on v1.0.0","url":"https://github.com/shahadul878/local-addon-laravel/commit/ce856385f4e316fd421736d10f6653cc509a693f"},{"kind":"commit","date":"2026-11-06T15:32:24Z","repo":"easy-php-settings","sha":"be35d51","msg":"Release 1.1.9 (#1)","url":"https://github.com/shahadul878/easy-php-settings/commit/be35d512975546eb2acfb2196a7048d6da6c7d33"},{"kind":"commit","date":"2026-11-06T15:31:28Z","repo":"easy-php-settings","sha":"e175071","msg":"chore: release 1.1.9","url":"https://github.com/shahadul878/easy-php-settings/commit/e1750717629eb0a16b0454a5e96083b6895f729e"},{"kind":"commit","date":"2026-11-06T15:07:42Z","repo":"easy-php-settings","sha":"a31be0a","msg":"feat: CV-style About tab, contextual review request, compact notices","url":"https://github.com/shahadul878/easy-php-settings/commit/a31be0affcab33adec6d695f47ce08db2bc5cdfb"},{"kind":"commit","date":"2026-11-06T14:28:49Z","repo":"easy-php-settings","sha":"2af4a36","msg":"feat: Site Health checks, live value check, host alert, upload hint, log viewer","url":"https://github.com/shahadul878/easy-php-settings/commit/2af4a36aae98fe9e43abe361ef7f4705019190e5"},{"kind":"commit","date":"2026-11-06T08:44:20Z","repo":"local-addon-postgresql","sha":"54ca6ab","msg":"docs: install from the GitHub release archive","url":"https://github.com/shahadul878/local-addon-postgresql/commit/54ca6ab80ed7c55e1e778bb05f89366e53fb7a99"}]};
+  const LANG_COLORS = { PHP: '#4F5D95', JavaScript: '#E8C930', TypeScript: '#3178C6', HTML: '#E34C26', CSS: '#563D7C', Python: '#3572A5', Shell: '#5FB832' };
+  const DESC_FALLBACK = { 'easy-php-settings': 'Manage PHP limits and php.ini values from wp-admin. 1,000+ active installs on wordpress.org.' };
+  const COMMIT_TYPE = /^(feat|fix|docs|chore|refactor|perf|test|ci|style|build)(\([^)]*\))?!?:\s*/i;
+  const str = (v, max = 160) => String(v ?? '').slice(0, max);
+  const safeUrl = (u) => (typeof u === 'string' && u.startsWith('https://github.com/') ? u : `https://github.com/${GH_USER}`);
+  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  const AGO_STEPS = [[60, 'second'], [60, 'minute'], [24, 'hour'], [7, 'day'], [4.35, 'week'], [12, 'month'], [Infinity, 'year']];
+  const ago = (iso) => {
+    let v = (Date.parse(iso) - Date.now()) / 1000;
+    if (Number.isNaN(v)) return 'unknown';
+    for (const [n, unit] of AGO_STEPS) {
+      if (Math.abs(v) < n) return rtf.format(Math.round(v), unit);
+      v /= n;
+    }
+    return 'unknown';
+  };
+  const dhakaDay = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dhaka', weekday: 'short', day: 'numeric', month: 'short' });
+  const dhakaTime = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', hour12: false });
+  const fullFmt = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dhaka', dateStyle: 'medium', timeStyle: 'short' });
+  const snapFmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+
+  const parseCommit = (msg) => {
+    const m = msg.match(COMMIT_TYPE);
+    const type = m ? m[1].toLowerCase() : /^release\b/i.test(msg) ? 'release' : 'commit';
+    const text = m ? msg.slice(m[0].length) : msg;
+    return { type, text: text.charAt(0).toUpperCase() + text.slice(1) };
   };
 
-  function initCity() {
-    const host = $('city');
-    const T = window.THREE;
-    if (!host || !T) return false;
-    let renderer;
-    try { renderer = new T.WebGLRenderer({ antialias: true, alpha: true }); }
-    catch (err) { console.warn('3D city: WebGL is not available, showing the flat chart instead.', err); return false; }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = T.sRGBEncoding;
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = T.PCFSoftShadowMap;
-    host.appendChild(renderer.domElement);
+  const entryItem = (it) => {
+    const d = new Date(it.date);
+    const { type, text } = it.kind === 'release' ? { type: 'release', text: it.msg } : parseCommit(it.msg);
+    const li = el('li', `entry ${type}`);
+    const time = el('time', null, dhakaTime.format(d));
+    time.dateTime = it.date;
+    time.title = `${fullFmt.format(d)}, Dhaka time`;
+    const link = el('a', 'msg', text);
+    link.href = safeUrl(it.url); link.target = '_blank'; link.rel = 'noopener';
+    const main = el('div', 'entry-main');
+    main.append(link, el('span', 'where mono', `${it.repo} · ${it.sha}`));
+    li.append(time, el('span', `tag ${type}`, type), main);
+    return li;
+  };
 
-    const scene = new T.Scene();
-    const camera = new T.PerspectiveCamera(30, 1, 0.1, 800);
-    scene.add(new T.HemisphereLight(0xffffff, 0x556677, 0.7));
-    const sun = new T.DirectionalLight(0xffffff, 0.8);
-    sun.position.set(-26, 48, 30);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048);
-    Object.assign(sun.shadow.camera, { left: -36, right: 36, top: 24, bottom: -24, near: 1, far: 160 });
-    sun.shadow.bias = -0.0008;
-    scene.add(sun);
+  const repoItem = (r) => {
+    const link = el('a', 'repo');
+    link.href = safeUrl(r.url); link.target = '_blank'; link.rel = 'noopener';
+    const when = el('span', 'ago', ago(r.pushed));
+    when.dataset.iso = r.pushed;
+    const top = el('span', 'repo-top');
+    top.append(el('b', null, r.name), when);
+    link.append(top);
+    const desc = r.desc || DESC_FALLBACK[r.name];
+    if (desc) link.append(el('span', 'desc', desc));
+    if (r.lang) {
+      const lang = el('span', 'lang');
+      const swatch = el('i');
+      swatch.style.setProperty('--c', LANG_COLORS[r.lang] || 'var(--muted)');
+      lang.append(swatch, document.createTextNode(r.lang));
+      link.append(lang);
+    }
+    const li = el('li');
+    li.append(link);
+    return li;
+  };
 
-    const WEEKS_N = Math.ceil(DAYS.length / 7), SIZE = 0.8, H_PER = 0.36, ZERO_H = 0.08;
-    const GROW_MS = 900, WEEK_STAGGER = 16, SPIN = 0.0022, IDLE_MS = 2500;
-    const maxN = Math.max(...DAYS);
-    const geo = new T.BoxGeometry(SIZE, 1, SIZE);
-    geo.translate(0, 0.5, 0);
-    const mesh = new T.InstancedMesh(geo, new T.MeshStandardMaterial({ roughness: 0.55, metalness: 0.05 }), DAYS.length);
-    mesh.castShadow = true;
-    mesh.receiveShadow = true;
-    mesh.frustumCulled = false;
-    scene.add(mesh);
-    const x0 = -(WEEKS_N - 1) / 2, z0 = -3;
-    const m4 = new T.Matrix4();
-    const heightOf = (n) => (n === 0 ? ZERO_H : n * H_PER);
-    const setGrowth = (i, k) => {
-      m4.makeScale(1, Math.max(0.001, heightOf(DAYS[i]) * k), 1);
-      m4.setPosition(x0 + Math.floor(i / 7), 0, z0 + (i % 7));
-      mesh.setMatrixAt(i, m4);
-    };
-
-    const plinthMats = Array.from({ length: 6 }, () => new T.MeshStandardMaterial({ roughness: 0.85 }));
-    const plinth = new T.Mesh(new T.BoxGeometry(WEEKS_N + 1.6, 1.2, 8.6), plinthMats);
-    plinth.position.set(0, -0.6, 0);
-    plinth.receiveShadow = true;
-    scene.add(plinth);
-    const labelCanvas = document.createElement('canvas');
-    labelCanvas.width = 2048; labelCanvas.height = 44;
-    const labelTex = new T.CanvasTexture(labelCanvas);
-    labelTex.encoding = T.sRGBEncoding;
-    labelTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    plinthMats[4].map = labelTex;
-
-    let palette = null, hovered = -1, needsRender = true;
-    const readPalette = () => {
-      const cs = getComputedStyle(document.documentElement);
-      const raw = (n) => cs.getPropertyValue(n).trim();
-      const col = (n) => new T.Color(raw(n)).convertSRGBToLinear();
-      return { zero: col('--city-zero'), low: col('--city-low'), high: col('--city-high'), hot: col('--ok'), base: col('--city-base'), baseHex: raw('--city-base'), text: raw('--muted') };
-    };
-    const colorOf = (i) => (DAYS[i] === 0 ? palette.zero : palette.low.clone().lerp(palette.high, Math.sqrt(DAYS[i] / maxN)));
-    const drawLabel = () => {
-      const c = labelCanvas.getContext('2d');
-      c.fillStyle = palette.baseHex; c.fillRect(0, 0, labelCanvas.width, labelCanvas.height);
-      c.fillStyle = palette.text; c.font = '600 22px "JetBrains Mono", monospace'; c.textBaseline = 'middle';
-      c.textAlign = 'left'; c.fillText('GITHUB.COM/SHAHADUL878', 44, 23);
-      c.textAlign = 'right'; c.fillText('9 NOV 2025 → 9 NOV 2026 · 725 CONTRIBUTIONS', labelCanvas.width - 44, 23);
-      labelTex.needsUpdate = true;
-    };
-    const applyPalette = () => {
-      palette = readPalette();
-      DAYS.forEach((_, i) => mesh.setColorAt(i, i === hovered ? palette.hot : colorOf(i)));
-      mesh.instanceColor.needsUpdate = true;
-      plinthMats.forEach((m, k) => { if (k !== 4) m.color.copy(palette.base); });
-      drawLabel();
-      needsRender = true;
-    };
-    applyPalette();
-    DAYS.forEach((_, i) => setGrowth(i, still ? 1 : 0));
-
-    const view = { theta: -0.62, phi: 0.6, lastInteract: -Infinity };
-    let radius = 70;
-    const placeCamera = () => {
-      camera.position.set(radius * Math.sin(view.theta) * Math.cos(view.phi), radius * Math.sin(view.phi), radius * Math.cos(view.theta) * Math.cos(view.phi));
-      camera.lookAt(0, 1.2, 0);
-    };
-    const resize = () => {
-      const w = host.clientWidth, h = host.clientHeight;
-      if (!w || !h) return;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      radius = camera.aspect >= 1.7 ? 66 : 66 * (1.7 / camera.aspect) ** 0.75;
-      camera.updateProjectionMatrix();
-      needsRender = true;
-    };
-    new ResizeObserver(resize).observe(host);
-    resize();
-
-    const canvas = renderer.domElement, ray = new T.Raycaster(), ndc = new T.Vector2();
-    const setHover = (i) => {
-      if (i === hovered) return;
-      const prev = hovered;
-      hovered = i;
-      if (prev >= 0) mesh.setColorAt(prev, colorOf(prev));
-      if (i >= 0) { mesh.setColorAt(i, palette.hot); showDay(i); } else { showDay(PEAK_DAY, 'Busiest day: '); }
-      mesh.instanceColor.needsUpdate = true;
-      needsRender = true;
-    };
-    const pickAt = (e) => {
-      const r = canvas.getBoundingClientRect();
-      ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-      ray.setFromCamera(ndc, camera);
-      const hit = ray.intersectObject(mesh)[0];
-      setHover(hit ? hit.instanceId : -1);
-    };
-    let drag = null;
-    canvas.addEventListener('pointerdown', (e) => {
-      drag = { x: e.clientX, y: e.clientY, theta: view.theta, phi: view.phi, moved: false };
-      canvas.setPointerCapture(e.pointerId);
-    });
-    canvas.addEventListener('pointermove', (e) => {
-      if (!drag) { if (e.pointerType === 'mouse') pickAt(e); return; }
-      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
-      if (Math.abs(dx) + Math.abs(dy) > 4) drag.moved = true;
-      view.theta = drag.theta - dx * 0.008;
-      view.phi = clamp(drag.phi + dy * 0.005, 0.22, 1.25);
-      view.lastInteract = performance.now();
-      needsRender = true;
-    });
-    const endDrag = (e) => { if (drag && !drag.moved && e.type === 'pointerup') pickAt(e); drag = null; view.lastInteract = performance.now(); };
-    canvas.addEventListener('pointerup', endDrag);
-    canvas.addEventListener('pointercancel', endDrag);
-    canvas.addEventListener('pointerleave', () => { if (!drag) setHover(-1); });
-
-    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyPalette);
-    new MutationObserver(applyPalette).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    document.fonts?.ready.then(() => { drawLabel(); needsRender = true; });
-
-    let visible = false, growStart = null, grown = still;
-    new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }, { threshold: 0.15 }).observe(host);
-    const frameLoop = (t) => {
-      requestAnimationFrame(frameLoop);
-      if (!visible || document.hidden) return;
-      if (!grown) {
-        if (growStart === null) growStart = t;
-        const elapsed = t - growStart;
-        let done = true;
-        DAYS.forEach((_, i) => {
-          const k = clamp((elapsed - Math.floor(i / 7) * WEEK_STAGGER) / GROW_MS, 0, 1);
-          if (k < 1) done = false;
-          setGrowth(i, 1 - (1 - k) ** 3);
-        });
-        mesh.instanceMatrix.needsUpdate = true;
-        grown = done;
-        needsRender = true;
-      }
-      if (!still && !drag && t - view.lastInteract > IDLE_MS) { view.theta += SPIN; needsRender = true; }
-      if (needsRender) { placeCamera(); renderer.render(scene, camera); needsRender = false; }
-    };
-    requestAnimationFrame(frameLoop);
-    showDay(PEAK_DAY, 'Busiest day: ');
-    return true;
+  let feedState = null;
+  function updateFeedClock() {
+    if (!feedState) return;
+    const latest = feedState.data.items[0]?.date;
+    $('feed-last').textContent = latest ? ago(latest) : 'unknown';
+    document.querySelectorAll('#feed-repo-list .ago').forEach((n) => { n.textContent = ago(n.dataset.iso); });
+    $('feed-state').classList.toggle('is-live', feedState.isLive);
+    $('feed-state-text').textContent = feedState.isLive
+      ? `Live from GitHub · checked ${ago(feedState.data.at)}`
+      : `Saved snapshot · ${snapFmt.format(new Date(feedState.data.at))}`;
   }
-  if (!initCity()) { $('city-card').hidden = true; $('chart-fallback').hidden = false; }
+
+  function renderFeed(data, isLive) {
+    const nodes = [];
+    let lastDay = '';
+    data.items.slice(0, FEED_ITEMS).forEach((it) => {
+      const d = new Date(it.date);
+      if (Number.isNaN(d.getTime())) return;
+      const day = dhakaDay.format(d);
+      if (day !== lastDay) { lastDay = day; nodes.push(el('li', 'day', day)); }
+      nodes.push(entryItem(it));
+    });
+    $('feed-log').replaceChildren(...nodes);
+    $('feed-repo-list').replaceChildren(...data.repos.slice(0, FEED_REPOS).map(repoItem));
+    $('feed-repos').textContent = String(data.publicRepos);
+    feedState = { data, isLive };
+    updateFeedClock();
+  }
+
+  async function getJSON(url) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), FEED_TIMEOUT_MS);
+    try {
+      const res = await fetch(url, { signal: ctrl.signal, headers: { Accept: 'application/vnd.github+json' } });
+      if (!res.ok) throw new Error(`GitHub API returned ${res.status} for ${url}`);
+      return await res.json();
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  const normRepo = (r) => ({ name: str(r.name, 80), desc: str(r.description, 140), lang: str(r.language, 30), pushed: str(r.pushed_at, 30), url: str(r.html_url, 200) });
+  const normCommit = (repo) => (c) => ({
+    kind: 'commit', repo, date: str(c?.commit?.author?.date, 30), sha: str(c?.sha, 7),
+    msg: str(c?.commit?.message, 400).split('\n')[0].slice(0, 120), url: str(c?.html_url, 200),
+  });
+  const normRelease = (e) => {
+    const repo = str(e.repo?.name, 120).split('/')[1] || '';
+    const tag = str(e.payload?.release?.tag_name, 40);
+    return { kind: 'release', repo, date: str(e.created_at, 30), sha: tag, msg: `Released ${tag}`, url: `https://github.com/${GH_USER}/${encodeURIComponent(repo)}/releases/tag/${encodeURIComponent(tag)}` };
+  };
+
+  async function fetchLiveFeed() {
+    const [user, repos, events] = await Promise.all([
+      getJSON(`${GH_API}/users/${GH_USER}`),
+      getJSON(`${GH_API}/users/${GH_USER}/repos?sort=pushed&per_page=15`),
+      getJSON(`${GH_API}/users/${GH_USER}/events/public?per_page=50`).catch(() => []),
+    ]);
+    if (!Array.isArray(repos)) throw new Error('GitHub API returned an unexpected repo list');
+    const own = repos.filter((r) => r && !r.fork).slice(0, FEED_REPOS).map(normRepo);
+    const commitLists = await Promise.all(own.map((r) =>
+      getJSON(`${GH_API}/repos/${GH_USER}/${encodeURIComponent(r.name)}/commits?per_page=4`).catch(() => [])));
+    const commits = commitLists.flatMap((list, i) => (Array.isArray(list) ? list.map(normCommit(own[i].name)) : []));
+    const releases = (Array.isArray(events) ? events : []).filter((e) => e?.type === 'ReleaseEvent').map(normRelease);
+    const items = [...commits, ...releases]
+      .filter((x) => !Number.isNaN(Date.parse(x.date)))
+      .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+    if (!items.length) throw new Error('GitHub API returned no recent activity');
+    return { at: new Date().toISOString(), publicRepos: Number(user?.public_repos) || SNAPSHOT.publicRepos, repos: own, items };
+  }
+
+  const readFeedCache = () => {
+    try {
+      const c = JSON.parse(localStorage.getItem(FEED_CACHE_KEY) || 'null');
+      return c && Date.now() - Date.parse(c.at) < FEED_CACHE_MS ? c : null;
+    } catch (err) {
+      console.info('Activity feed: cache unavailable, fetching fresh data.', err.message);
+      return null;
+    }
+  };
+  const writeFeedCache = (data) => {
+    try { localStorage.setItem(FEED_CACHE_KEY, JSON.stringify(data)); }
+    catch (err) { console.info('Activity feed: could not cache data; it will refetch next visit.', err.message); }
+  };
+
+  renderFeed(SNAPSHOT, false);
+  setInterval(updateFeedClock, FEED_CLOCK_MS);
+  const cachedFeed = readFeedCache();
+  if (cachedFeed) { renderFeed(cachedFeed, true); }
+  else {
+    fetchLiveFeed()
+      .then((data) => { writeFeedCache(data); renderFeed(data, true); })
+      .catch((err) => { console.info('Activity feed: showing the saved snapshot.', err.message); });
+  }
 })();
 </script>
 

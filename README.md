@@ -4,4 +4,4 @@ Personal site of H M Shahadul Islam, full-stack PHP developer (WordPress, Larave
 
 Live at https://shahadul878.github.io
 
-A single static `index.html`: a live status page with a 3D server rack of skills and a 3D city built from a year of GitHub contributions (three.js r128 from cdnjs).
+A single static `index.html`: a live status page with a 3D server rack of skills and a live GitHub deploy log fetched from the public GitHub API (with a saved snapshot as fallback).
